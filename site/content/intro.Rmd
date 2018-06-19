@@ -2,8 +2,12 @@
 title: Introdução
 ---
 
-<a href = "../intro.zip"><button>Download</button></a>
-
 # Resumo
 
+* Fluxo do Web Scraping
+
+![](/ciclo.png)
+
 # Referências
+
+[O fluxo do Web Scraping](http://curso-r.com/blog/2018/02/18/2018-02-18-fluxo-scraping/)

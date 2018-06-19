@@ -1,0 +1,16 @@
+---
+title: Navegar
+---
+
+# Resumo
+
+* Introdução ao HTML
+* XPath - XML Path Language
+* CSS - Cascading Style Sheets
+* Ferramenta *Inspect* dos navegadores.
+
+# Referências
+
+* [XPath Reference](https://www.w3.org/TR/1999/REC-xpath-19991116/)
+* [xml2 - pacote do R](https://cran.r-project.org/web/packages/xml2/index.html)
+* [CSS para iniciantes](http://tableless.github.io/iniciantes/manual/css/)

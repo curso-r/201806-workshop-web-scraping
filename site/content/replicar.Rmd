@@ -1,0 +1,18 @@
+---
+title: Replicar
+---
+
+# Resumo
+
+Veremos que não é necessário ter um navegador para acessar um site, característica da qual tiraremos vantagem para poder coletar todas as páginas das quais precisamos.
+
+* Protocolo HTTP e métodos
+* Pacote `httr`.
+* Cookies
+* Ferramenta *Networking* dos navegadores.
+
+# Referências
+
+* [Protocolo HTTP](https://pt.wikipedia.org/wiki/Hypertext_Transfer_Protocol)
+* [Pacote `httr`](https://cran.r-project.org/web/packages/httr/index.html)
+* [Get Started with `httr`](https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html)

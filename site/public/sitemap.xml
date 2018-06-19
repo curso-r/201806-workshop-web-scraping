@@ -12,11 +12,31 @@
   </url>
   
   <url>
+    <loc>/identificar/</loc>
+  </url>
+  
+  <url>
     <loc>/intro/</loc>
   </url>
   
   <url>
-    <loc>/manip/</loc>
+    <loc>/iterar/</loc>
+  </url>
+  
+  <url>
+    <loc>/miscelanea/</loc>
+  </url>
+  
+  <url>
+    <loc>/navegar/</loc>
+  </url>
+  
+  <url>
+    <loc>/parsear/</loc>
+  </url>
+  
+  <url>
+    <loc>/replicar/</loc>
   </url>
   
   <url>
@@ -25,7 +45,7 @@
   </url>
   
   <url>
-    <loc>/visualizacao/</loc>
+    <loc>/validar/</loc>
   </url>
   
   <url>

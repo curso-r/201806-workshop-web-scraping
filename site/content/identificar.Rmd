@@ -1,0 +1,20 @@
+---
+title: Identificar
+---
+
+# Resumo
+
+O primeiro passo do fluxo do Web Scraping consiste em **identificar** os elementos que queremos extrair e observar se eles se comportam da mesma forma em todas as situações possíveis.
+
+Extração de:
+
+* Textos
+* Imagens
+* PDF's
+* Áudio
+
+# Referências
+
+[Site de exemplo](http://example.webscraping.com)
+
+

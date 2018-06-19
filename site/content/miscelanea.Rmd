@@ -1,0 +1,13 @@
+---
+title: Miscelânea
+---
+
+# Resumo
+
+* Paralelização e Distribuição
+* Captchas
+
+# Referências
+
+* [`mcapply`](https://www.rforge.net/doc/packages/multicore/mclapply.html)
+* [decryptr](https://decryptr.netlify.com)

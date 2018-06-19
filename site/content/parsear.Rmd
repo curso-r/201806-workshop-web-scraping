@@ -1,0 +1,16 @@
+---
+title: Parsear
+---
+
+# Resumo
+
+O anglicismo parsear vem do verbo to parse, que quer dizer algo como analisar ou estudar, mas que, no contexto do web scraping, significa extrair os dados desejados de um arquivo HTML.
+
+* pacote `rvest`
+* exercícios de download e parsing
+* conceito de **Tidy Data**
+
+# Referências
+
+* [`rvest`](https://cran.r-project.org/web/packages/rvest/index.html)
+* [Posts da prática](http://curso-r.com/tags/web-scraping/)

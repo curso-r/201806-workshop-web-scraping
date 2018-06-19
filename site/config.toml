@@ -17,21 +17,37 @@ footnotereturnlinkcontents = "↩"
     url = "/"
     weight = 1
 [[menu.main]]
-    name = "Introdução"
+    name = "Intro"
     url = "/intro/"
+    weight = 1.5
+[[menu.main]]
+    name = "Identificar"
+    url = "/identificar/"
     weight = 2
 [[menu.main]]
-    name = "Manipulação"
-    url = "/manip/"
+    name = "Navegar"
+    url = "/navegar/"
     weight = 3
 [[menu.main]]
-    name = "Visualização"
-    url = "/visualizacao/"
+    name = "Replicar"
+    url = "/replicar/"
     weight = 4
 [[menu.main]]
-    name = "Case"
-    url = "/case/"
+    name = "Parsear"
+    url = "/parsear/"
     weight = 5
+[[menu.main]]
+    name = "Iterar"
+    url = "/iterar/"
+    weight = 6
+[[menu.main]]
+    name = "Validar"
+    url = "/validar/"
+    weight = 7
+[[menu.main]]
+    name = "Miscelânea"
+    url = "/miscelanea/"
+    weight = 8
 
 [params]
     description = "A website built through Hugo and blogdown."

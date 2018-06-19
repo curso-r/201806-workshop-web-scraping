@@ -21,33 +21,83 @@ Resumo  Referências  </description>
     </item>
     
     <item>
+      <title>Identificar</title>
+      <link>/identificar/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/identificar/</guid>
+      <description>Resumo O primeiro passo do fluxo do Web Scraping consiste em identificar os elementos que queremos extrair e observar se eles se comportam da mesma forma em todas as situações possíveis.
+Extração de:
+ Textos Imagens PDF’s Áudio   Referências Site de exemplo
+ </description>
+    </item>
+    
+    <item>
       <title>Introdução</title>
       <link>/intro/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/intro/</guid>
-      <description> Download  
-Resumo  Referências  </description>
+      <description>Resumo  Fluxo do Web Scraping   Referências O fluxo do Web Scraping
+ </description>
     </item>
     
     <item>
-      <title>Manipulação</title>
-      <link>/manip/</link>
+      <title>Iterar</title>
+      <link>/iterar/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/manip/</guid>
-      <description> Download  
-Resumo  Referências  </description>
+      <guid>/iterar/</guid>
+      <description>Resumo Iterar nada mais é que do que repetir um comportamento várias vezes para parâmetros ligeiramente diferentes. Em computação geralmente falamos em “iterar em uma lista” por exemplo, mas nesse caso vamos estar iterando ao longo das páginas as quais desejamos baixar.
+ for e while no R pacote purrr lidando com erros usando carefully   Referências  purrr abjutils   </description>
     </item>
     
     <item>
-      <title>Visualização</title>
-      <link>/visualizacao/</link>
+      <title>Miscelânea</title>
+      <link>/miscelanea/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/visualizacao/</guid>
-      <description> Download  
-Resumo  Referências  </description>
+      <guid>/miscelanea/</guid>
+      <description>Resumo  Paralelização e Distribuição Captchas   Referências  mcapply decryptr   </description>
+    </item>
+    
+    <item>
+      <title>Navegar</title>
+      <link>/navegar/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/navegar/</guid>
+      <description>Resumo  Introdução ao HTML XPath - XML Path Language CSS - Cascading Style Sheets Ferramenta Inspect dos navegadores.   Referências  XPath Reference xml2 - pacote do R CSS para iniciantes   </description>
+    </item>
+    
+    <item>
+      <title>Parsear</title>
+      <link>/parsear/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/parsear/</guid>
+      <description>Resumo O anglicismo parsear vem do verbo to parse, que quer dizer algo como analisar ou estudar, mas que, no contexto do web scraping, significa extrair os dados desejados de um arquivo HTML.
+ pacote rvest exercícios de download e parsing conceito de Tidy Data   Referências  rvest Posts da prática   </description>
+    </item>
+    
+    <item>
+      <title>Replicar</title>
+      <link>/replicar/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/replicar/</guid>
+      <description>Resumo Veremos que não é necessário ter um navegador para acessar um site, característica da qual tiraremos vantagem para poder coletar todas as páginas das quais precisamos.
+ Protocolo HTTP e métodos Pacote httr. Cookies Ferramenta Networking dos navegadores.   Referências  Protocolo HTTP Pacote httr Get Started with httr   </description>
+    </item>
+    
+    <item>
+      <title>Validar</title>
+      <link>/validar/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/validar/</guid>
+      <description>Resumo Um dos passos mais importantes do web scraping é verificar se a requisição que fizemos retornou exatamente o que queríamos.
+ Bloqueio de IP’s Event validation e view state   Referências  Bloqueio de IP Event validation/ View-state   </description>
     </item>
     
   </channel>

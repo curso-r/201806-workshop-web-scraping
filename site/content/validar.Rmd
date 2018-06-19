@@ -1,0 +1,15 @@
+---
+title: Validar
+---
+
+# Resumo
+
+Um dos passos mais importantes do web scraping é verificar se a requisição que fizemos retornou exatamente o que queríamos.
+
+* Bloqueio de IP's
+* Event validation e view state
+
+# Referências
+
+* [Bloqueio de IP](https://en.wikipedia.org/wiki/IP_address_blocking)
+* [Event validation/ View-state](https://stackoverflow.com/questions/14558022/what-is-the-purpose-of-eventvalidation-viewstate-in-aspx)

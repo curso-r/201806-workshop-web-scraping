@@ -1,0 +1,16 @@
+---
+title: Iterar
+---
+
+# Resumo
+
+Iterar nada mais é que do que repetir um comportamento várias vezes para parâmetros ligeiramente diferentes. Em computação geralmente falamos em "iterar em uma lista" por exemplo, mas nesse caso vamos estar iterando ao longo das páginas as quais desejamos baixar.
+
+* `for` e `while` no R
+* pacote `purrr`
+* lidando com erros usando `carefully`
+
+# Referências
+
+* [`purrr`](https://purrr.tidyverse.org)
+* [`abjutils`](https://github.com/abjur/abjutils)
