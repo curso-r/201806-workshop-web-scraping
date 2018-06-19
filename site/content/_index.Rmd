@@ -6,6 +6,8 @@ title: Workshop de Web scraping
 
 Neste workshop, você aprenderá a extrair e estruturar dados diretamente da internet. Passaremos pelos princípios básicos de requisições web, como controlá-las por intermédio do R e como utilizá-las para baixar dados de meneira consistente e automatizada.
 
+Os slides do curso estão disponíveis [neste link](/slides).
+
 ## Público Alvo
 
 Estudantes, pesquisadores e profissionais que trabalham com análise de dados e precisam recorrentemente extrair dados da internet.
@@ -15,8 +17,6 @@ Estudantes, pesquisadores e profissionais que trabalham com análise de dados e 
 -  Conhecimento introdutório de programação em R: lógica de programação e R base.
 
 - Laptop com R e RStudio® instalados (quanto mais atualizados, melhor).
-
-
 
 ## Datas e Horários
 
