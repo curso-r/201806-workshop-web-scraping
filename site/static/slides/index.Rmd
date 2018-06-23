@@ -17,6 +17,7 @@ output:
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(comment = "#>")
 library(magrittr)
+library(tidyverse)
 ```
 
 
@@ -265,7 +266,7 @@ html <- read_html("static/html_exemplo.html")
 
 # Coletar todos os nodes com a tag <p>
 nodes <- xml_find_all(html, "//p")
-nodes
+xml_find_all(nodes, "//head")
 
 # Extrair o texto contido em cada um dos nodes
 text <- xml_text(nodes)
@@ -279,14 +280,17 @@ Com `xml_attrs()` podemos extrair todos os atributos de um node:
 
 ```{r}
 xml_attrs(nodes)
+xml_attr(nodes, "style")
 ```
 
 Já com `xml_children()`, `xml_parents()` e `xml_siblings()` podemos acessar a
 estrutura de parentesco dos nós:
 
 ```{r}
-body <- xml_find_all(html, "body")
-xml_siblings(body)
+heads <- xml_find_all(html, "head")
+xml_siblings(heads)
+
+xml_children(heads)
 ```
 
 ---
@@ -344,7 +348,10 @@ trabalham preferencialmente com XPath.
 ```{r}
 html <- read_html("static/html_exemplo_css_a_parte.html")
 xml_find_all(html, "//p")
+
 xml_find_all(html, "//*[@class='azul']")
+rvest::html_nodes(html, ".azul")
+
 ```
 
 Note que `//p` indica que estamos fazendo uma busca na tag `p`, enquanto `//*`
@@ -441,7 +448,7 @@ get_1 <- GET("https://httpbin.org/get")
 
 # GET equivalente a https://httpbin.org/cookies/set?meu-cookie=1
 params <- list("meu-cookie" = 1)
-get_2 <- GET("https://httpbin.org/cookies/set", query = params)
+get_2 <- GET("https://httpbin.org/cookies", query = params)
 ```
 
 ---
@@ -619,7 +626,7 @@ Construa um `data.frame` com as colunas `pais` e `link` dos dez primeiros paíse
 url <- "http://example.webscraping.com/"
 paises <- url %>%
   httr::GET() %>%
-  httr::read_html() %>%
+  xml2::read_html() %>%
   xml2::xml_find_all('//table//a') %>%
   tibble::tibble(node = .) %>%
   dplyr::mutate(pais = xml2::xml_text(node),
@@ -643,7 +650,8 @@ A partir do objeto `paises` gerado no exercício 1 crie uma coluna `img_src` que
 
 ```{r}
 paises <- paises %>%
-  mutate(img_src = xml_find_all(node, "img") %>% xml_attr("src"))
+  mutate(img_src = xml_find_all(node, "img") %>%
+           xml_attr("src"))
 ```
 
 ---
@@ -681,7 +689,10 @@ Exemplo: baixando a imagem de uma bandeira.
 url_img <- paste0(url, paises$img_src[1])
 url_img
 
-img <- GET(url_img, write_disk("teste.png", overwrite = TRUE))
+img <- GET(url,
+           path = paises$img_src[1],
+           write_disk("teste.png",
+                      overwrite = TRUE))
 ```
 
 ---
@@ -692,7 +703,9 @@ Também há a possibilidade de salvar um `content` a qualquer momento.
 ```{r}
 img <- GET(url_img)
 
-img %>% httr::content() %>% png::writePNG("teste2.png")
+img %>% 
+  httr::content() %>%
+  png::writePNG("teste2.png")
 ```
 
 A função `content` retorna o conteúdo de uma dada `response`. 
@@ -723,6 +736,17 @@ preg
 ```
 
 --
+
+```{r}
+
+d <- tibble(
+  a = 1:3,
+  b = letters[1:3],
+  c = list(mtcars, iris, cars)
+)
+
+```
+
 
 ## Jeito 2
 
@@ -797,11 +821,10 @@ Versão arrumada:
 
 Exercício 4:
 
-1. Crie uma conta manualmente e depois construa uma função para se logar.
-2. Faça uma requisição que baixa a página de Andorra.
-3. Extraia os dados de andorra numa tabela `tidy`.
+1. Faça uma requisição que baixa a página de Andorra.
+2. Extraia os dados de andorra numa tabela `tidy`.
 
-<!-- ### ITERAR ########################################################### -->
+<!-- ### ITERARf ########################################################### -->
 
 ---
 class: inverse, center, middle
@@ -911,11 +934,8 @@ Para remediar isso, criamos uma função que faz três coisas:
 # pvec (cont.)
 
 ```{r, erro = FALSE, warning=FALSE, message = FALSE}
-pad <- function(str, b = "", a = "") paste0(b, str, a) 
-abjutils::pvec(LETTERS, pad, 
-               b = "123", a = "321", 
-               .cores = 4, 
-               .flatten = TRUE)
+lista <- list("a", 2, -1)
+abjutils::pvec(lista, log, .cores = 2)
 ```
 
 ---
@@ -923,6 +943,12 @@ abjutils::pvec(LETTERS, pad,
 # Exercício 5
 
 Baixe as páginas de todos os países
+
+# Exercício 6
+
+Crie uma conta manualmente e depois construa uma função para se logar.
+
+Dica: use `abjutils::chrome_to_body()` para copiar o form do Chrome para o computador.
 
 
 <!-- ### VALIDAR ########################################################## -->

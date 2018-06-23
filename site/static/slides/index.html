@@ -271,13 +271,12 @@ html &lt;- read_html("static/html_exemplo.html")
 
 # Coletar todos os nodes com a tag &lt;p&gt;
 nodes &lt;- xml_find_all(html, "//p")
-nodes
+xml_find_all(nodes, "//head")
 ```
 
 ```
-#&gt; {xml_nodeset (2)}
-#&gt; [1] &lt;p&gt;Sou um parágrafo!&lt;/p&gt;
-#&gt; [2] &lt;p style="color: blue;"&gt;Sou um parágrafo azul.&lt;/p&gt;
+#&gt; {xml_nodeset (1)}
+#&gt; [1] &lt;head&gt;\n&lt;meta http-equiv="Content-Type" content="text/html; charset= ...
 ```
 
 ```r
@@ -309,18 +308,37 @@ xml_attrs(nodes)
 #&gt; "color: blue;"
 ```
 
+```r
+xml_attr(nodes, "style")
+```
+
+```
+#&gt; [1] NA             "color: blue;"
+```
+
 Já com `xml_children()`, `xml_parents()` e `xml_siblings()` podemos acessar a
 estrutura de parentesco dos nós:
 
 
 ```r
-body &lt;- xml_find_all(html, "body")
-xml_siblings(body)
+heads &lt;- xml_find_all(html, "head")
+xml_siblings(heads)
 ```
 
 ```
 #&gt; {xml_nodeset (1)}
-#&gt; [1] &lt;head&gt;\n&lt;meta http-equiv="Content-Type" content="text/html; charset= ...
+#&gt; [1] &lt;body&gt;\n    &lt;h1&gt;Título Grande&lt;/h1&gt;\n    \n    &lt;h2&gt;Título um pouco me ...
+```
+
+```r
+xml_children(heads)
+```
+
+```
+#&gt; {xml_nodeset (3)}
+#&gt; [1] &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;\n
+#&gt; [2] &lt;meta charset="latin1"&gt;\n
+#&gt; [3] &lt;title&gt;Título da abinha do navegador&lt;/title&gt;
 ```
 
 ---
@@ -391,6 +409,16 @@ xml_find_all(html, "//p")
 
 ```r
 xml_find_all(html, "//*[@class='azul']")
+```
+
+```
+#&gt; {xml_nodeset (2)}
+#&gt; [1] &lt;p class="azul"&gt;Sou um parágrafo azul.&lt;/p&gt;
+#&gt; [2] &lt;p id="meu-p-favorito" class="azul"&gt;Sou um parágrafo azul e negrito. ...
+```
+
+```r
+rvest::html_nodes(html, ".azul")
 ```
 
 ```
@@ -494,7 +522,7 @@ get_1 &lt;- GET("https://httpbin.org/get")
 
 # GET equivalente a https://httpbin.org/cookies/set?meu-cookie=1
 params &lt;- list("meu-cookie" = 1)
-get_2 &lt;- GET("https://httpbin.org/cookies/set", query = params)
+get_2 &lt;- GET("https://httpbin.org/cookies", query = params)
 ```
 
 ---
@@ -566,8 +594,9 @@ get_2$cookies
 ```
 
 ```
-#&gt;        domain  flag path secure expiration       name value
-#&gt; 1 httpbin.org FALSE    /   TRUE       &lt;NA&gt; meu-cookie     1
+#&gt; [1] domain     flag       path       secure     expiration name      
+#&gt; [7] value     
+#&gt; &lt;0 rows&gt; (or 0-length row.names)
 ```
 
 ---
@@ -707,15 +736,14 @@ Construa um `data.frame` com as colunas `pais` e `link` dos dez primeiros paíse
 
 
 ```r
-library(dplyr)
 url &lt;- "http://example.webscraping.com/"
 paises &lt;- url %&gt;%
-  GET %&gt;%
-  read_html %&gt;%
-  xml_find_all('//table//a') %&gt;%
-  tibble(node = .) %&gt;%
-  mutate(pais = xml_text(node),
-         attrs = xml_attr(node, "href"))
+  httr::GET() %&gt;%
+  xml2::read_html() %&gt;%
+  xml2::xml_find_all('//table//a') %&gt;%
+  tibble::tibble(node = .) %&gt;%
+  dplyr::mutate(pais = xml2::xml_text(node),
+                attrs = xml2::xml_attr(node, "href"))
 ```
 
 ---
@@ -736,7 +764,8 @@ A partir do objeto `paises` gerado no exercício 1 crie uma coluna `img_src` que
 
 ```r
 paises &lt;- paises %&gt;%
-  mutate(img_src = xml_find_all(node, "img") %&gt;% xml_attr("src"))
+  mutate(img_src = xml_find_all(node, "img") %&gt;%
+           xml_attr("src"))
 ```
 
 ---
@@ -756,6 +785,26 @@ No navegador, inspecione o [http://example.webscraping.com/](http://example.webs
 
 ```r
 library(rvest)
+```
+
+```
+#&gt; 
+#&gt; Attaching package: 'rvest'
+```
+
+```
+#&gt; The following object is masked from 'package:purrr':
+#&gt; 
+#&gt;     pluck
+```
+
+```
+#&gt; The following object is masked from 'package:readr':
+#&gt; 
+#&gt;     guess_encoding
+```
+
+```r
 tabela &lt;- url %&gt;%
   GET() %&gt;%
   read_html %&gt;%
@@ -782,7 +831,10 @@ url_img
 ```
 
 ```r
-img &lt;- GET(url_img, write_disk("teste.png", overwrite = TRUE))
+img &lt;- GET(url,
+           path = paises$img_src[1],
+           write_disk("teste.png",
+                      overwrite = TRUE))
 ```
 
 ---
@@ -794,7 +846,9 @@ Também há a possibilidade de salvar um `content` a qualquer momento.
 ```r
 img &lt;- GET(url_img)
 
-img %&gt;% httr::content() %&gt;% png::writePNG("teste2.png")
+img %&gt;% 
+  httr::content() %&gt;%
+  png::writePNG("teste2.png")
 ```
 
 A função `content` retorna o conteúdo de uma dada `response`. 
@@ -826,6 +880,16 @@ preg
 ```
 
 --
+
+
+```r
+d &lt;- tibble(
+  a = 1:3,
+  b = letters[1:3],
+  c = list(mtcars, iris, cars)
+)
+```
+
 
 ## Jeito 2
 
@@ -902,13 +966,12 @@ Versão arrumada:
 ---
 # Mão na Massa
 
-Exercícios: 
+Exercício 4:
 
-1. Crie uma conta manualmente e depois construa uma função para se logar.
-2. Faça uma requisição que baixa a página de Andorra.
-3. Extraia os dados de andorra numa tabela `tidy`.
+1. Faça uma requisição que baixa a página de Andorra.
+2. Extraia os dados de andorra numa tabela `tidy`.
 
-&lt;!-- ### ITERAR ########################################################### --&gt;
+&lt;!-- ### ITERARf ########################################################### --&gt;
 
 ---
 class: inverse, center, middle
@@ -1023,25 +1086,30 @@ Para remediar isso, criamos uma função que faz três coisas:
 
 
 ```r
-pad &lt;- function(str, b = "", a = "") paste0(b, str, a) 
-abjutils::pvec(LETTERS, pad, 
-               b = "123", a = "321", 
-               .cores = 4, 
-               .flatten = TRUE)
+lista &lt;- list("a", 2, -1)
+abjutils::pvec(lista, log, .cores = 2)
 ```
 
 ```
-#&gt;  [1] "123A321" "123B321" "123C321" "123D321" "123E321" "123F321" "123G321"
-#&gt;  [8] "123H321" "123I321" "123J321" "123K321" "123L321" "123M321" "123N321"
-#&gt; [15] "123O321" "123P321" "123Q321" "123R321" "123S321" "123T321" "123U321"
-#&gt; [22] "123V321" "123W321" "123X321" "123Y321" "123Z321"
+#&gt; # A tibble: 3 x 3
+#&gt;      id return output           
+#&gt;   &lt;int&gt; &lt;chr&gt;  &lt;list&gt;           
+#&gt; 1     1 error  &lt;S3: simpleError&gt;
+#&gt; 2     2 result &lt;dbl [1]&gt;        
+#&gt; 3     3 result &lt;dbl [1]&gt;
 ```
 
 ---
 
-# Exercício
+# Exercício 5
 
 Baixe as páginas de todos os países
+
+# Exercício 6
+
+Crie uma conta manualmente e depois construa uma função para se logar.
+
+Dica: use `abjutils::chrome_to_body()` para copiar o form do Chrome para o computador.
 
 
 &lt;!-- ### VALIDAR ########################################################## --&gt;
@@ -1113,6 +1181,12 @@ event_validation &lt;- r %&gt;%
   rvest::html_nodes("input[name='__EVENTVALIDATION']") %&gt;%
   rvest::html_attr("value")
 ```
+
+---
+# Exercícios extras
+
+- Refaça o webscraper do chancedegol: https://github.com/jtrecenti/chancedegol
+- Refaça o webscraper da sabesp: https://github.com/jtrecenti/sabesp
 
 ---
 class: inverse, center, middle
@@ -1220,7 +1294,7 @@ pag_signup %&gt;%
 ```
 
 ```
-#&gt; [1] "fertile\n"
+#&gt; [1] "e;a;\\r%%\\;e 0 ER?\n3K“ 5“ psi.“ 5“ ,_\n\n"
 ```
 
 Muitas vezes pode ser necessário tratar ainda mais a imagem antes de passar o OCR.
