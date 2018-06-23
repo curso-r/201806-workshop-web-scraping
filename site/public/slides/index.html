@@ -3,8 +3,8 @@
   <head>
     <title>Workshop: Web Scraping em R</title>
     <meta charset="utf-8">
-    <meta name="author" content="Caio Lente + Fernando Corrêa + Curso-R" />
-    <meta name="date" content="2018-03-10" />
+    <meta name="author" content="Curso-R" />
+    <meta name="date" content="2018-06-23" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
   </head>
@@ -13,8 +13,8 @@
 class: center, middle, inverse, title-slide
 
 # Workshop: Web Scraping em R
-### Caio Lente + Fernando Corrêa + Curso-R
-### 2018-03-10
+### Curso-R
+### 2018-06-23
 
 ---
 
@@ -30,27 +30,26 @@ class: center, middle, inverse, title-slide
 # Quem Somos
 
 A _Curso-R_:
-- O grupo surgiu em 2015 para ministrar o curso "Programação em R: do
-casual ao avançado" no IME-USP
-- Em 2016 e 2017, ministramos novamente o curso e, depois de mais de 100 alunos
-formados, decidimos aumentar a gama e a frequência das aulas
+- O grupo surgiu em 2015 para ministrar o curso "Programação em R: do casual ao avançado" no IME-USP
+- Em 2016 e 2017, ministramos novamente o curso e, depois de mais de 100 alunos formados, decidimos aumentar a gama e a frequência das aulas
 
-Caio:
-- Bacharelando em Ciência da Computação pelo IME-USP
-- Estagiário na Platipus Consultoria
-- Metido a designer, maníaco da organização e metade texano
+Julio Trecenti:
 
-Fernando:
-- Bacharel e mestrando em Estatística pelo IME-USP
-- Diretor-técnico na Associação Brasileira de Jurimetria
-- Nerd, Estatístico e mágico
+- Doutorando em estatística no IME-USP
+- Vários cargos
+- Convence todo mundo a fazer estatística :D
 
 ---
 # Prólogo
 
-O termo mais apropriado para tratar de *web scraping* em portugês é "raspagem web", ou seja, a extração de dados provenientes de uma página online.
+- Termo mais apropriado: 
+    - *web scraping* 
+    - "raspagem web"
+    - extração de dados provenientes de uma página da internet.
 
-Quando se trata de web scraping, a primeira coisa que precisamos fazer é criar um plano de ação. Raspar dados online não é uma ciência exata, então se não nos planejarmos com antecedência é bem provável que no final nosso código fique completamente incompreensível e irreprodutível.
+Quando se trata de web scraping, a primeira coisa que precisamos fazer é criar um plano de ação. 
+
+Raspar dados online não é uma ciência exata, então se não nos planejarmos com antecedência é bem provável que no final nosso código fique completamente incompreensível e irreprodutível.
 
 ### Expectativa vs. Realidade
 
@@ -91,7 +90,7 @@ fluxo:
 
 - Como **iterar** ao longo de muitas páginas e como salvar esses resultados
 
-- Como **validar** resultados e evitar os problemas mais comuns do web scraping
+- Como **validar** resultados e evitar os problemas mais comuns
 
 - Outras tecnlogias associadas ao web scraping moderno
 
@@ -568,7 +567,7 @@ get_2$cookies
 
 ```
 #&gt;        domain  flag path secure expiration       name value
-#&gt; 1 httpbin.org FALSE    /  FALSE       &lt;NA&gt; meu-cookie     1
+#&gt; 1 httpbin.org FALSE    /   TRUE       &lt;NA&gt; meu-cookie     1
 ```
 
 ---
@@ -602,7 +601,7 @@ read_html(post_1)
 ```
 #&gt; {xml_document}
 #&gt; &lt;html&gt;
-#&gt; [1] &lt;body&gt;&lt;p&gt;{\n  "args": {}, \n  "data": "", \n  "files": {}, \n  "form ...
+#&gt; [1] &lt;body&gt;&lt;p&gt;{"args":{},"data":"","files":{},"form":{},"headers":{"Accep ...
 ```
 
 ```r
@@ -612,7 +611,7 @@ read_html(post_2)
 ```
 #&gt; {xml_document}
 #&gt; &lt;html&gt;
-#&gt; [1] &lt;body&gt;&lt;p&gt;{\n  "args": {}, \n  "data": "", \n  "files": {}, \n  "form ...
+#&gt; [1] &lt;body&gt;&lt;p&gt;{"args":{},"data":"","files":{},"form":{"um-numero":"1","um ...
 ```
 
 ???
@@ -637,7 +636,7 @@ read_html("static/post.html")
 ```
 #&gt; {xml_document}
 #&gt; &lt;html&gt;
-#&gt; [1] &lt;body&gt;&lt;p&gt;{\n  "args": {}, \n  "data": "", \n  "files": {}, \n  "form ...
+#&gt; [1] &lt;body&gt;&lt;p&gt;{"args":{},"data":"","files":{},"form":{"um-numero":"1","um ...
 ```
 
 Clicando duas vezes no arquivo ou rodando a função `BROWSE()` abrimos ele em
@@ -801,6 +800,11 @@ img %&gt;% httr::content() %&gt;% png::writePNG("teste2.png")
 A função `content` retorna o conteúdo de uma dada `response`. 
 OBS: No caso o conteúdo era um `png`, por isso utilizamos o `writePNG()` pra guardar o conteúdo.
 
+
+---
+class: inverse, center, middle
+# BREAK (15 minutos)
+
 ---
 # Tidy Output
 
@@ -896,10 +900,6 @@ Versão arrumada:
 ```
 
 ---
-class: inverse, center, middle
-# BREAK (15 minutos)
-
----
 # Mão na Massa
 
 Exercícios: 
@@ -964,7 +964,7 @@ Mas também existem outros cuidados que você pode ter na hora de repetir uma re
 
 2. Deixe tudo o mais `tidy` o possível.
 
-3. Use a função `carefully`.
+3. Use a função `abjutils::pvec`.
 
 ---
 # Iteração - Básico
@@ -999,7 +999,7 @@ do loop, vamos estar pegando uma página do índice do site.
 
 ---
 
-# carefully
+# pvec
 
 Web scraping é difícil porque, lá no fundo, estamos fazendo uma engenharia reversa...
 
@@ -1019,30 +1019,22 @@ Para remediar isso, criamos uma função que faz três coisas:
 
 ---
 
-# carefully (cont.)
+# pvec (cont.)
 
 
 ```r
-library(abjutils)
-
-pad &lt;- function(str, b = "", a = "") { paste0(b, str, a) }
-
-# Create wrapped version of pad() that executes over 4 cores,
-# captures errors, and prints its current iteration with a
-# probability of 50%
-new_pad &lt;- carefully(pad, p = 0.5, cores = 4)
-
-# Execute new_pad() with some sample data
-new_pad(c("asdf", "poiu", "qwer"), b = "0", a = "1")
+pad &lt;- function(str, b = "", a = "") paste0(b, str, a) 
+abjutils::pvec(LETTERS, pad, 
+               b = "123", a = "321", 
+               .cores = 4, 
+               .flatten = TRUE)
 ```
 
 ```
-#&gt; # A tibble: 3 x 3
-#&gt;   input output result
-#&gt;   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; 
-#&gt; 1 asdf  0asdf1 OK    
-#&gt; 2 poiu  0poiu1 OK    
-#&gt; 3 qwer  0qwer1 OK
+#&gt;  [1] "123A321" "123B321" "123C321" "123D321" "123E321" "123F321" "123G321"
+#&gt;  [8] "123H321" "123I321" "123J321" "123K321" "123L321" "123M321" "123N321"
+#&gt; [15] "123O321" "123P321" "123Q321" "123R321" "123S321" "123T321" "123U321"
+#&gt; [22] "123V321" "123W321" "123X321" "123Y321" "123Z321"
 ```
 
 ---
@@ -1087,8 +1079,9 @@ A solução mais simples para o bloqueio de IP, que resolve um problema tanto do
 
 ```r
 for(i in 1:10){
+  
   httr::GET(
-    paste0('http://example.webscraping.com/places/default/view/',i)
+    paste0('http://example.webscraping.com/places/default/view/', i)
   )
   
   sleep(1)
@@ -1131,13 +1124,13 @@ class: inverse, center, middle
 
 ### Paralelização
 
-Já aprendemos anteriormente a função `carefully()`, que permite a execução
+Já aprendemos anteriormente a função `abjutils::pvec()`, que permite a execução
 em paralelo de múltiplos downloads. Isso é possível porque, na realidade,
 o computador passa muito tempo da raspagem esperando o servidor entregar os
 arquivos necessários pra ele; esse tempo pode ser utilizado para começar
 a raspagem de outras páginas.
 
-O motor por trás da carefully é a função `mcmapply()` do pacote `parallel`:
+O motor por trás da `pvec` é a função `future_map()` do pacote `furrr`:
 
 
 ```r
@@ -1227,7 +1220,7 @@ pag_signup %&gt;%
 ```
 
 ```
-#&gt; [1] "ﬁxed\n\n"
+#&gt; [1] "fertile\n"
 ```
 
 Muitas vezes pode ser necessário tratar ainda mais a imagem antes de passar o OCR.

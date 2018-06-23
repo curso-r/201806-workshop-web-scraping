@@ -1,7 +1,7 @@
 ---
 title: "Workshop: Web Scraping em R"
-author: "Caio Lente + Fernando Corrêa + Curso-R"
-date: "2018-03-10"
+author: "Curso-R"
+date: "2018-06-23"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -26,27 +26,26 @@ library(magrittr)
 # Quem Somos
 
 A _Curso-R_:
-- O grupo surgiu em 2015 para ministrar o curso "Programação em R: do
-casual ao avançado" no IME-USP
-- Em 2016 e 2017, ministramos novamente o curso e, depois de mais de 100 alunos
-formados, decidimos aumentar a gama e a frequência das aulas
+- O grupo surgiu em 2015 para ministrar o curso "Programação em R: do casual ao avançado" no IME-USP
+- Em 2016 e 2017, ministramos novamente o curso e, depois de mais de 100 alunos formados, decidimos aumentar a gama e a frequência das aulas
 
-Caio:
-- Bacharelando em Ciência da Computação pelo IME-USP
-- Estagiário na Platipus Consultoria
-- Metido a designer, maníaco da organização e metade texano
+Julio Trecenti:
 
-Fernando:
-- Bacharel e mestrando em Estatística pelo IME-USP
-- Diretor-técnico na Associação Brasileira de Jurimetria
-- Nerd, Estatístico e mágico
+- Doutorando em estatística no IME-USP
+- Vários cargos
+- Convence todo mundo a fazer estatística :D
 
 ---
 # Prólogo
 
-O termo mais apropriado para tratar de *web scraping* em portugês é "raspagem web", ou seja, a extração de dados provenientes de uma página online.
+- Termo mais apropriado: 
+    - *web scraping* 
+    - "raspagem web"
+    - extração de dados provenientes de uma página da internet.
 
-Quando se trata de web scraping, a primeira coisa que precisamos fazer é criar um plano de ação. Raspar dados online não é uma ciência exata, então se não nos planejarmos com antecedência é bem provável que no final nosso código fique completamente incompreensível e irreprodutível.
+Quando se trata de web scraping, a primeira coisa que precisamos fazer é criar um plano de ação. 
+
+Raspar dados online não é uma ciência exata, então se não nos planejarmos com antecedência é bem provável que no final nosso código fique completamente incompreensível e irreprodutível.
 
 ### Expectativa vs. Realidade
 
@@ -86,7 +85,7 @@ fluxo:
 
 - Como **iterar** ao longo de muitas páginas e como salvar esses resultados
 
-- Como **validar** resultados e evitar os problemas mais comuns do web scraping
+- Como **validar** resultados e evitar os problemas mais comuns
 
 - Outras tecnlogias associadas ao web scraping moderno
 
@@ -617,15 +616,14 @@ O site [http://example.webscraping.com/](http://example.webscraping.com/) conté
 Construa um `data.frame` com as colunas `pais` e `link` dos dez primeiros países que aparecem na primeira página.
 
 ```{r, warning=FALSE, message=FALSE}
-library(dplyr)
 url <- "http://example.webscraping.com/"
 paises <- url %>%
-  GET %>%
-  read_html %>%
-  xml_find_all('//table//a') %>%
-  tibble(node = .) %>%
-  mutate(pais = xml_text(node),
-         attrs = xml_attr(node, "href"))
+  httr::GET() %>%
+  httr::read_html() %>%
+  xml2::xml_find_all('//table//a') %>%
+  tibble::tibble(node = .) %>%
+  dplyr::mutate(pais = xml2::xml_text(node),
+                attrs = xml2::xml_attr(node, "href"))
 ```
 
 ---
@@ -699,6 +697,11 @@ img %>% httr::content() %>% png::writePNG("teste2.png")
 
 A função `content` retorna o conteúdo de uma dada `response`. 
 OBS: No caso o conteúdo era um `png`, por isso utilizamos o `writePNG()` pra guardar o conteúdo.
+
+
+---
+class: inverse, center, middle
+# BREAK (15 minutos)
 
 ---
 # Tidy Output
@@ -790,13 +793,9 @@ Versão arrumada:
 ```
 
 ---
-class: inverse, center, middle
-# BREAK (15 minutos)
-
----
 # Mão na Massa
 
-Exercícios: 
+Exercício 4:
 
 1. Crie uma conta manualmente e depois construa uma função para se logar.
 2. Faça uma requisição que baixa a página de Andorra.
@@ -853,7 +852,7 @@ Mas também existem outros cuidados que você pode ter na hora de repetir uma re
 
 2. Deixe tudo o mais `tidy` o possível.
 
-3. Use a função `carefully`.
+3. Use a função `abjutils::pvec`.
 
 ---
 # Iteração - Básico
@@ -889,7 +888,7 @@ do loop, vamos estar pegando uma página do índice do site.
 
 ---
 
-# carefully
+# pvec
 
 Web scraping é difícil porque, lá no fundo, estamos fazendo uma engenharia reversa...
 
@@ -909,25 +908,19 @@ Para remediar isso, criamos uma função que faz três coisas:
 
 ---
 
-# carefully (cont.)
+# pvec (cont.)
 
 ```{r, erro = FALSE, warning=FALSE, message = FALSE}
-library(abjutils)
-
-pad <- function(str, b = "", a = "") { paste0(b, str, a) }
-
-# Create wrapped version of pad() that executes over 4 cores,
-# captures errors, and prints its current iteration with a
-# probability of 50%
-new_pad <- carefully(pad, p = 0.5, cores = 4)
-
-# Execute new_pad() with some sample data
-new_pad(c("asdf", "poiu", "qwer"), b = "0", a = "1")
+pad <- function(str, b = "", a = "") paste0(b, str, a) 
+abjutils::pvec(LETTERS, pad, 
+               b = "123", a = "321", 
+               .cores = 4, 
+               .flatten = TRUE)
 ```
 
 ---
 
-# Exercício
+# Exercício 5
 
 Baixe as páginas de todos os países
 
@@ -966,8 +959,9 @@ A solução mais simples para o bloqueio de IP, que resolve um problema tanto do
 
 ```{r, eval = FALSE}
 for(i in 1:10){
+  
   httr::GET(
-    paste0('http://example.webscraping.com/places/default/view/',i)
+    paste0('http://example.webscraping.com/places/default/view/', i)
   )
   
   sleep(1)
@@ -1009,13 +1003,13 @@ class: inverse, center, middle
 
 ### Paralelização
 
-Já aprendemos anteriormente a função `carefully()`, que permite a execução
+Já aprendemos anteriormente a função `abjutils::pvec()`, que permite a execução
 em paralelo de múltiplos downloads. Isso é possível porque, na realidade,
 o computador passa muito tempo da raspagem esperando o servidor entregar os
 arquivos necessários pra ele; esse tempo pode ser utilizado para começar
 a raspagem de outras páginas.
 
-O motor por trás da carefully é a função `mcmapply()` do pacote `parallel`:
+O motor por trás da `pvec` é a função `future_map()` do pacote `furrr`:
 
 ```{r}
 #> Unit: seconds
