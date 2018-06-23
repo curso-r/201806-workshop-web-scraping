@@ -9,5 +9,5 @@ title: Miscelânea
 
 # Referências
 
-* [`mcapply`](https://www.rforge.net/doc/packages/multicore/mclapply.html)
-* [decryptr](https://decryptr.netlify.com)
+* [`pvec`](https://github.com/abjur/abjutils)
+* [`decryptr`](https://decryptr.netlify.com)
