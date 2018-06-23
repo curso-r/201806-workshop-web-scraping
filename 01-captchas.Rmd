@@ -28,7 +28,7 @@ library(decryptr)
 model_rfb <- load_model("rfb")
 model_rfb$model
 
-'imgs/receita/captcha48ec12131bab.png' %>% 
+'site/static/imgs/captcha41367a06c5a.png' %>% 
   read_captcha() %>% 
   decrypt(model_rfb)
 
