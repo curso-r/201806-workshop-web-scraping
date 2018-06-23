@@ -994,6 +994,12 @@ event_validation <- r %>%
 ```
 
 ---
+# Exercícios extras
+
+- Refaça o webscraper do chancedegol: https://github.com/jtrecenti/chancedegol
+- Refaça o webscraper da sabesp: https://github.com/jtrecenti/sabesp
+
+---
 class: inverse, center, middle
 
 # MISCELÂNEA
