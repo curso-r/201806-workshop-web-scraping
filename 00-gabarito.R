@@ -10,8 +10,8 @@ html_links <- re %>%
   xml2::xml_find_all("//table//a")
 
 da <- tibble::tibble(
-  link = xml2::xml_attr(links, "href"),
-  txt = xml2::xml_text(links)
+  link = xml2::xml_attr(html_links, "href"),
+  txt = xml2::xml_text(html_links)
 )
 
 da$txt <- stringr::str_squish(da$txt)
